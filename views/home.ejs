@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOME PAGE</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f7fb;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        padding: 20px;
+        background: #4a90e2;
+        color: white;
+        margin: 0;
+      }
+      form {
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      form input,
+      form button {
+        margin: 10px;
+        padding: 10px;
+      }
+      table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      table th,
+      table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+      }
+      table th {
+        background: #4a90e2;
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+      }
+      table tr:hover {
+        background: #f1f5ff;
+        transition: background 0.3s;
+      }
+      h5 {
+        text-align: center;
+        padding: 20px;
+        background: #4a90e2;
+        color: red;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>URL SHORTENER SERVICE</h1>
+
+    <form method="post" action="/url">
+      <label for="url">Enter your URL here</label>
+      <input
+        type="text"
+        id="url"
+        name="url"
+        placeholder="http://example.com"
+        required
+      />
+      <button type="submit">Generate</button>
+    </form>
+    <h5>
+      if you want to redirect to specific url use
+      htttp://localhost/8001/url/shortid
+    </h5>
+    <table>
+      <tr>
+        <th>Index</th>
+        <th>Short ID</th>
+        <th>Redirect URL</th>
+        <th>Total Clicks</th>
+        <th>Action</th>
+      </tr>
+
+      <% urls.forEach((url, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= url.shortId %></td>
+        <td><%= url.redirectURL %></td>
+        <td><%= url.visithistory.length %></td>
+        <td>
+          <form
+            action="/url/delete/<%= url._id %>"
+            method="post"
+            style="display: inline"
+          >
+            <button
+              type="submit"
+              style="
+                background: #e74c3c;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+              "
+              onmouseover="this.style.background='#c0392b';"
+              onmouseout="this.style.background='#e74c3c';"
+            >
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>
