@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const { CreateMongoServer } = require("./connection.js");
+const CreateMongoServer = require("./connection.js");
+
 
 const staticrouter = require("./router/staticrouter.js");
 const urlroute = require("./router/url.js");
