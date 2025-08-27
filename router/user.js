@@ -3,20 +3,20 @@ const { handlecreateuser, handlelogin } = require("../controllers/user");
 
 const router = express.Router();
 
-// Show signup page
+// Render signup page
 router.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("signup");  // looks for views/signup.ejs
 });
 
-// Handle signup
+// Handle signup form
 router.post("/signup", handlecreateuser);
 
-// Show login page
+// Render login page
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login");  // looks for views/login.ejs
 });
 
-// Handle login
+// Handle login form
 router.post("/login", handlelogin);
 
 module.exports = router;
