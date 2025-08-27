@@ -1,39 +1,39 @@
-// index.js
 require("dotenv").config();
 const express = require("express");
-const CreateMongoServer = require("./connection.js");
-const session = require('express-session');
+const session = require("express-session");
+const path = require("path");
 
+const CreateMongoServer = require("./connection.js");
+
+// Routers
 const staticrouter = require("./router/staticrouter.js");
 const urlroute = require("./router/url.js");
 const userroute = require("./router/user.js");
 
-const path = require("path");
-
 const app = express();
-const PORT = process.env.PORT || 8001;  
+const PORT = process.env.PORT || 8001;
 
-// connect db
-CreateMongoServer();   
+// Connect DB
+CreateMongoServer();
 console.log("MongoDB URI:", process.env.MONGO_URL);
 
-// middleware
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//sessions
+// Sessions
 app.use(session({
-  secret: 'your-secret-key', // store in .env for production
+  secret: process.env.SESSION_SECRET || "your-secret-key",
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // true only if HTTPS
+  cookie: { secure: false } // set true only with HTTPS + proxy
 }));
 
-// ejs setup
+// EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// routes
+// Routes
 app.use("/url", urlroute);
 app.use("/user", userroute);
 app.use("/", staticrouter);
@@ -44,7 +44,7 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// listen
+// Listen
 app.listen(PORT, () => {
   console.log(`✅ Server is started at port ${PORT}`);
 });

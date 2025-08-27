@@ -1,15 +1,16 @@
 const express = require("express");
 const { CreateShortID, updateVisitHistory } = require("../controllers/url");
-
-
 const URL = require("../models/model");
 
 const router = express.Router();
 
+// Create short URL
 router.post("/", CreateShortID);
 
+// Redirect + visit tracking
 router.get("/:shortid", updateVisitHistory);
 
+// Delete URL
 router.post("/delete/:id", async (req, res) => {
   try {
     await URL.findByIdAndDelete(req.params.id);
@@ -19,7 +20,5 @@ router.post("/delete/:id", async (req, res) => {
     res.status(500).send("Failed to delete URL");
   }
 });
-
-
 
 module.exports = router;
