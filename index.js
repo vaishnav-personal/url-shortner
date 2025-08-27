@@ -37,7 +37,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/url", urlroute);
 app.use("/user", userroute);   
 app.use("/", staticrouter);
-router.get("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/login");
   });
