@@ -36,6 +36,16 @@ app.set("views", path.join(__dirname, "views"));
 // Routes
 app.use("/url", urlroute);
 app.use("/user", userroute);
+
+// put this after app.use("/user", userroute);
+
+app.get("/login", (req, res) => {
+  res.redirect("/user/login");
+});
+
+app.get("/signup", (req, res) => {
+  res.redirect("/user/signup");
+});
 app.use("/", staticrouter);
 
 app.get("/logout", (req, res) => {
