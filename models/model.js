@@ -17,7 +17,12 @@ const urlSchema = new mongoose.Schema({
         default: Date.now
       }
     }
-  ]
+  ],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // reference to User model
+    required: true
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("URL", urlSchema);

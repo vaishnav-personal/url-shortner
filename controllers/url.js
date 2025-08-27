@@ -2,29 +2,24 @@ const shortid = require("shortid");
 const URL = require("../models/model");
 
 async function CreateShortID(req, res) {
-  try {
-    const body = req.body;
-    console.log(body);
-    if (!body || !body.url) {
-      return res.status(400).json({ error: "URL is required" });
-    }
-
-    const shortIdGenerated = shortid.generate();
-    console.log("Generated ShortID:", shortIdGenerated);
-
-    const urlDoc = await URL.create({
-      shortId: shortIdGenerated,
-      redirectURL: body.url,
-      visithistory: []
-    });
-
-    res.json({ status: "created successfully", id: shortIdGenerated, data: urlDoc });
-  } catch (error) {
-    console.error("Error creating short URL:", error);
-    res.status(500).json({ error: "Failed to create short URL" });
+  if (!req.session.userId) {
+    return res.status(401).send("Login first");
   }
-}
 
+  const body = req.body;
+  if (!body.url) return res.status(400).json({ error: "URL is required" });
+
+  const shortIdGenerated = shortid.generate();
+  const urlDoc = await URL.create({
+    shortId: shortIdGenerated,
+    redirectURL: body.url,
+    visithistory: [],
+    userId: req.session.userId
+  });
+
+  res.redirect("/"); // or send JSON response
+}
+  
 async function updateVisitHistory(req, res) {
   try {
     const shortidParam = req.params.shortid;

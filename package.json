@@ -10,10 +10,12 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "com": "^0.0.5",
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-session": "^1.18.2",
     "mongoose": "^8.9.5",
     "nodemon": "^3.1.9",
     "shortid": "^2.2.17"

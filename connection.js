@@ -5,12 +5,7 @@ async function CreateMongoServer() {
     const mongoURL = process.env.MONGO_URL;
     console.log("🔗 Connecting to:", mongoURL);
 
-    await mongoose.connect(mongoURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000, // 10s timeout
-    });
-
+    await mongoose.connect(mongoURL); // no options needed with modern Mongoose
     console.log("✅ MongoDB connected successfully");
   } catch (err) {
     console.error("❌ MongoDB connection error:", err.message);
