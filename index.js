@@ -1,3 +1,4 @@
+// index.js
 require("dotenv").config();
 const express = require("express");
 const CreateMongoServer = require("./connection.js");
@@ -28,7 +29,6 @@ app.use(session({
   cookie: { secure: false } // true only if HTTPS
 }));
 
-
 // ejs setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -37,12 +37,11 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/url", urlroute);
 app.use("/user", userroute);   
 app.use("/", staticrouter);
-app.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/login");
   });
 });
-
 
 // listen
 app.listen(PORT, () => {
